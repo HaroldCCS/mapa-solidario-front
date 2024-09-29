@@ -1,0 +1,79 @@
+html {
+  overflow-x: hidden; //solucion temporal para scroll que sale a veces cuando uno pasa el mouse rapido por los botones del sidebar //TODO solucionar
+
+  // --primary: #007bff;
+  --main-font-family: "Montserrat", sans-serif;
+
+  --primary: #3ECC27;
+  --button-primary-hover: #1280B0;
+
+  --gray-light: #ced4da;
+  --gray-medium: #495057;
+  --gray-dark: #343a40;
+  --background:#e5e5e5;
+
+  --background2: #fff;
+  --text: #33ad20;
+  --text2: #8F989D;
+
+  --font-title: 'Barlow', sans-serif;
+  --font-text: 'Nunito', sans-serif;
+  --font-size: 16px;
+
+  --button-primary: var(--primary);
+  --button-primary-hover: #34b421;
+  --button-primary-bg: #341b69;
+
+  --button-secundary: var(--secondary);
+  --button-secundary-hover: #0c6489;
+  --button-secundary-bg: #094b67;
+
+  --screen-sm-min: 576px;
+  --screen-md-min: 768px;
+  --screen-lg-min: 992px;
+  --screen-xl-min: 1200px;
+
+
+  .btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--button-primary);
+    --bs-btn-border-color: var(--button-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--button-primary-bg);
+    --bs-btn-hover-border-color: var(--button-primary-hover);
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--button-primary-hover);
+    --bs-btn-active-border-color: var(--button-primary-bg);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: var(--button-primary);
+    --bs-btn-disabled-border-color: var(--button-primary);
+  }
+
+
+  .btn-outline-primary {
+    --bs-btn-color: var(--button-primary);
+    --bs-btn-border-color: var(--button-primary);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--button-primary);
+    --bs-btn-hover-border-color: var(--button-primary);
+    --bs-btn-focus-shadow-rgb: 13, 110, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: var(--button-primary);
+    --bs-btn-active-border-color: var(--button-primary);
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: var(--button-primary);
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: var(--button-primary);
+    --bs-gradient: none;
+
+    &:hover {
+      svg {
+        color: #fff;
+      }
+    }
+  }
+}
+
+@import './general.scss';

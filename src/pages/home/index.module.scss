@@ -1,0 +1,21 @@
+.main {
+  max-width: 1000px;
+  width: 100%;
+  margin: auto;
+  height: 100%;
+}
+
+
+@media (max-width: 768px) {
+
+  .main {
+    overflow-x: auto;
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+  }
+
+  .main::-webkit-scrollbar {
+    display: none; /* Para Chrome, Safari y Opera */
+  }
+
+}

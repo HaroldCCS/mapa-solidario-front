@@ -1,0 +1,69 @@
+.sidebar {
+  background-color: var(--background2);
+  display: flex;
+  flex-direction: column;
+  min-width: 80px;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  border: 1px solid rgba(80, 80, 80, 0.406);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+
+  a {
+    text-decoration: none;
+  }
+
+  p {
+    text-align: center;
+    line-height: 1rem;
+  }
+}
+
+.link {
+  color: var(--primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.link.active {
+  svg {
+    color: black;
+  }
+
+  p {
+    color: black;
+  }
+
+  color: red;
+}
+
+@media (max-width: 768px) {
+
+  //TODO ARREGLAR VARIABLE 
+  .sidebar {
+    flex-direction: row;
+    width: 100%;
+    height: 60px;
+    min-height: 60px;
+    border-radius: 0.5rem 0.5rem 0 0;
+    overflow-x: auto;
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+    gap: 0.4rem;
+    justify-content: space-evenly;
+  }
+
+  .sidebar > * {
+    transform: scale(0.9);
+  }
+
+  .sidebar::-webkit-scrollbar {
+    display: none; /* Para Chrome, Safari y Opera */
+  }
+
+}

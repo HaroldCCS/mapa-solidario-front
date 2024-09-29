@@ -1,0 +1,14 @@
+
+.main {
+    display: flex;
+    height: 100vh;
+    height: -moz-available;
+    height: -webkit-fill-available;
+    height: fill-available;
+    width: 100%;
+}
+
+.main-body {
+    // padding: 2rem;
+    width: 100%;
+}

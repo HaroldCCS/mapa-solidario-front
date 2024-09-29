@@ -1,0 +1,18 @@
+.input_group_text {
+  width: 100%;
+  input  {
+    border-radius: 20px;
+    height: 50px;
+    background-color: #f6f8fc;
+  }
+
+  input:focus {
+    border-color: black;
+    box-shadow: 0;
+    background-color: #f6f8fc;
+  }
+
+  label {
+    margin: 0px;
+  }
+}
