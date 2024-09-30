@@ -3,9 +3,10 @@ export default interface Interface {
 	email?: string;
 	name?: string;
 	cell_phone?: string;
+	password?: string;
 	incremental?: number;
 	nit?: string;
-	roles?: string[];
-	headquarters_id?: string[];
+	rol?: string;
 	status?: boolean;
+	user_validated?: 'pending' | 'approved' | 'rejected';
 }

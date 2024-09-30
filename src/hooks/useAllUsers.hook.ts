@@ -3,13 +3,14 @@ import UserService from 'services/app/user.service';
 import { useAppDispatch, useAppSelector } from "store";
 import allUsersAction from 'store/app/allUsers/allUsers.action';
 import useRoles from './useRoles.hook';
+import { Interface } from 'store/app/allUsers';
 
 
 function useAllUsers() {
   const { roles } = useRoles();
 
   const [isLoading, setIsLoading] = useState(false);
-  const userService = new UserService();
+  const service = new UserService();
   const dispatch = useAppDispatch();
 
   const all_users = useAppSelector(state => state?.all_users?.all_users);
@@ -24,7 +25,7 @@ function useAllUsers() {
   const getAll = async() => {
     setIsLoading(true)
 
-    userService.getAll().then(response => {
+    service.getAll().then(response => {
       dispatch(allUsersAction.set_many(response))
       setIsLoading(false)
     })
@@ -35,16 +36,24 @@ function useAllUsers() {
     const role = roles.find(item => item.name === name || item._id === _id);
     if (!role) return [];
 
-    let users = all_users?.filter(item => item.roles?.includes(role?._id))
-    if (headquarter_id) users = users?.filter(item => item.headquarters_id?.some(headquarter => headquarter === headquarter_id))
+    const users = all_users?.filter(item => item.rol == role?._id)
     return users
   }
 
+  const updateUserValidation = async (user: Partial<Interface>, status: 'pending' | 'approved' | 'rejected', reason: string) => {
+
+    const response = await service.userValidation(user, status, reason)
+    if (response?._id) dispatch(allUsersAction.update(response as Interface))
+  }
+
   return {
-    isLoading,
+    all_users,
+
     getAll,
     getUsersByRole,
-    all_users
+    updateUserValidation,
+
+    isLoading
   };
 }
 

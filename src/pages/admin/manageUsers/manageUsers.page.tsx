@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Fade } from 'react-awesome-reveal'
 import Swal from 'sweetalert2';
-import { Button, Form, InputGroup, Spinner, Table } from 'react-bootstrap';
+import { Button, Form, InputGroup, Modal, Spinner, Table } from 'react-bootstrap';
 
 import { BsPencil } from "react-icons/bs";
 import { IoReload } from "react-icons/io5";
 import { FaRegEye } from "react-icons/fa";
+import { GrValidate } from "react-icons/gr";
 
 import styles from './index.module.scss';
 import useRoles from 'hooks/useRoles.hook';
@@ -16,15 +17,22 @@ import InterfaceUser from 'store/app/allUsers/allUsers.redux';
 
 import UserCreateComponent from '../../../modules/manageUsers/create/user.create.component';
 import HeaderTurnBackComponent from 'components/header_turn_back/header_turn_back.component';
+import InputComponent from '../../../components/inputForm/input.component';
 
 const ManageUsersPage: React.FC = () => {
 	const { roles } = useRoles()
-	const { all_users: users, getAll } = useAllUsers()
+	const { all_users: users, getAll, updateUserValidation } = useAllUsers()
 
 	const [userData, setUserData] = useState<Partial<InterfaceUser>>({})
 	const [rol, setRol] = useState<Partial<InterfaceRole>>({})
 	const [show, setShow] = useState<boolean>(false)
 
+	const [showUserValidation, setShowUserValidation] = useState<Partial<InterfaceUser>>({})
+	const handleCloseUserValidation = () => setShowUserValidation({})
+	const handleSaveUserValidate = async (user: Partial<InterfaceUser>, status: 'pending' | 'approved' | 'rejected', reason: string) => {
+		handleCloseUserValidation()
+		await updateUserValidation(user, status, reason)
+	}
 
 	useEffect(() => {
 		if (!show) setUserData({})
@@ -79,25 +87,28 @@ const ManageUsersPage: React.FC = () => {
 							<th>ID</th>
 							<th>nombre</th>
 							<th>celular</th>
-							<th>roles</th>
+							<th>rol</th>
 							<th style={{ width: '100px' }} >acciones</th>
 						</tr>
 					</thead>
 					<tbody>
-						{roles?.length && users?.filter(r => rol?._id ? r.roles?.includes(rol._id) : true).map(r => (<tr key={r?._id}>
+						{roles?.length && users?.filter(r => rol?._id ? rol?._id  == r.rol : true).map(r => (<tr key={r?._id}>
 							<td>{r.incremental}</td>
 							<td>{r.name}</td>
 							<td style={{ backgroundColor: !r?.cell_phone?.trim() ? '#ff00009e' : '' }}>{r?.cell_phone}</td>
-							<td>{r.roles?.map((item: string) => roles.find(rol => rol._id === item)?.name).join(', ')}</td>
+							<td>{roles.find(rol => rol._id === r.rol)?.name}</td>
 							<td>
 								<div className='d-flex justify-content-center gap-3'>
+									{roles.find(rol => rol._id === r.rol)?.name == 'entidad' && <>
+										<GrValidate style={{ cursor: 'pointer' }} onClick={() => setShowUserValidation(r)} title='Ver'></GrValidate>
+									</>}
 									<FaRegEye style={{ cursor: 'pointer' }} title='Ver' onClick={() => Swal.fire(
 										'Usuario ' + r?.incremental,
 										`<p><b>Nombre:</b> ${r?.name}</p>
 										<p><b>Correo:</b>  ${r?.email}</p>
 										<p><b>Cedula:</b>  ${r?.nit}</p>
 										<p><b>Celular:</b>  ${r?.cell_phone || ''}</p>
-										<p><b>Roles:</b>  ${r?.roles?.map((item: string) => roles.find(rol => rol._id === item)?.name).join(', ')}</p>`
+										<p><b>Roles:</b>  ${roles.find(rol => rol._id === r.rol)?.name}</p>`
 									)} />
 									<BsPencil style={{ cursor: 'pointer' }} title='Editar' onClick={() => { setUserData(r); setShow(true) }} />
 								</div>
@@ -109,8 +120,64 @@ const ManageUsersPage: React.FC = () => {
 				}
 
 			</Fade>
+
+			{showUserValidation?._id && <ModalComponentValidateUser user={showUserValidation} handleCloseUserValidation={handleCloseUserValidation} handleSaveUserValidate={handleSaveUserValidate} />}
 			{/* end listar los hogares del usuario */}
 		</div>
+	)
+}
+
+const ModalComponentValidateUser: React.FC<{ user: Partial<InterfaceUser>, handleCloseUserValidation: any, handleSaveUserValidate: any }> = ({ user, handleCloseUserValidation, handleSaveUserValidate }) => {
+	
+	const [status, setStatus] = useState<'pending' | 'approved' | 'rejected'>('pending')
+	const [reason, setReason] = useState<string>('')
+
+	useEffect(() => {
+		if (status === 'approved' && reason !== '') setReason('')
+	}, [status])
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+		setReason(value);
+	};
+
+	
+	return (
+		<Modal
+			show={(!!user?._id)}
+			onHide={handleCloseUserValidation}
+			backdrop="static"
+			keyboard={false}
+			centered
+		>
+			<Modal.Header closeButton>
+				<Modal.Title>Validación de usuario</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<Form.Label className="mb-2">Selecciona el estado del usuario:</Form.Label>
+
+				<InputGroup className="mb-3">
+				<Form.Check inline type="radio" id="basic-addon45" checked={status === 'approved'} name="status" onChange={e => setStatus(e?.target?.value as any)} value="approved" /> Aprobado
+				</InputGroup>
+
+				<InputGroup className="mb-3">
+					<Form.Check inline type="radio" id="basic-addon45" checked={status === 'rejected'} name="status" onChange={e => setStatus(e?.target?.value as any)} value="rejected" /> Rechazado
+				</InputGroup>
+
+				{status === 'rejected' &&
+					<InputComponent required label="Razón del rechazo" setHandle={handleChange} name="name" value={reason} type="string" version="group" />
+				}
+			</Modal.Body>
+			<Modal.Footer>
+				<Button variant="secondary" onClick={handleCloseUserValidation}>
+					cerrar
+				</Button>
+				<Button variant="primary" disabled={status === 'pending'} onClick={() => handleSaveUserValidate(user, status, reason)}>
+					Guardar
+				</Button>
+			</Modal.Footer>
+
+		</Modal>
 	)
 }
 

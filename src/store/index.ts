@@ -10,6 +10,9 @@ import userReducer from './auth/user/user.reducer'
 import permissionReducer from './auth/permissions/permission.reducer'
 import rolReducer from './app/rol/rol.reducer'
 import allUsersReducer from './app/allUsers/allUsers.reducer';
+import eventReducer from './app/event/event.reducer'
+import notificationReducer from './app/notification/notification.reducer'
+import headquarterReducer from './app/headquarter/headquarter.reducer'
 
 
 const userReducerCombined = combineReducers({
@@ -25,6 +28,9 @@ const rootReducer = combineReducers({
     user: userReducerCombined,
     roles: rolReducer,
     all_users: allUsersReducer,
+    events: eventReducer,
+    notifications: notificationReducer,
+    headquarters: headquarterReducer
 })
 
 const persistedReducer = persistReducer(

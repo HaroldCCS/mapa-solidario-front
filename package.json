@@ -1,5 +1,5 @@
 {
-  "name": "blowbarber-front",
+  "name": "mapa-solidario-front",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -31,6 +31,7 @@
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "moment": "^2.30.1",
+    "ol": "^10.2.1",
     "react": "^18.3.1",
     "react-awesome-reveal": "^4.2.10",
     "react-big-calendar": "^1.13.1",

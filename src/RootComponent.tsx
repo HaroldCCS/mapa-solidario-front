@@ -13,6 +13,8 @@ import { NotFoundPage, LoginPage, HomePage } from './pages'
 import PrivateRoute from './components/auth/auth';
 import PrivateLoginRoute from './components/auth/login';
 import ManageUsersPage from 'pages/admin/manageUsers/manageUsers.page'
+import { ManageHeadquartersPage } from 'pages/admin/manageHeadquarters/manageHeadquarters.page'
+import ManageNotificationsPage from 'pages/admin/manageNotifications/manageNotifications.page'
 
 const RootComponent: React.FC = () => {
     return (
@@ -25,6 +27,11 @@ const RootComponent: React.FC = () => {
                     <Route path="*" element={<StaffLayout><NotFoundPage /></StaffLayout>} />
                     <Route path={ROUTES.HOMEPAGE_ROUTE} element={<StaffLayout><HomePage /></StaffLayout>} />
                     <Route path={ROUTES.MANAGE_USERS} element={<StaffLayout><ManageUsersPage /></StaffLayout>} />
+                    <Route path={ROUTES.MANAGE_HEADQUARTERS} element={<StaffLayout><ManageHeadquartersPage /></StaffLayout>} />
+
+                    <Route path={ROUTES.MY_NOTIFICATIONS} element={<StaffLayout><ManageNotificationsPage /></StaffLayout>} />
+                    <Route path={ROUTES.SHOW_EVENTS} element={<StaffLayout><ManageHeadquartersPage /></StaffLayout>} />
+                    <Route path={ROUTES.SHOW_HEADQUARTERS} element={<StaffLayout><ManageHeadquartersPage /></StaffLayout>} />
                 </Route>
 
                 {/* Ruta de inicio de sesión */}

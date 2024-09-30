@@ -10,6 +10,9 @@ import rolAction from 'store/app/rol/rol.action';
 import userAction from 'store/auth/user/user.action';
 import permissionAction from 'store/auth/permissions/permission.action';
 import allUsersAction from 'store/app/allUsers/allUsers.action';
+import notificationAction from 'store/app/notification/notification.action';
+import headquarterAction from 'store/app/headquarter/headquarter.action';
+import eventAction from 'store/app/event/event.action';
 
 function useToken() {
   const token = useAppSelector(state => state?.user?.token?.token);
@@ -22,6 +25,9 @@ function useToken() {
     dispatch(rolAction.delete_all());
     dispatch(permissionAction.delete_all());
     dispatch(allUsersAction.delete_all());
+    dispatch(notificationAction.delete_all());
+    dispatch(headquarterAction.delete_all());
+    dispatch(eventAction.delete_all());
     navigate(ROUTES.LOGIN);
   }
 

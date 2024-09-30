@@ -1,10 +1,10 @@
 enum PERMISSIONS {
-  CLIENT_MY_RESERVATIONS = 'client-my-reservations',
   MANAGE_USERS = 'screen-manage-users',
-  MANAGE_RESERVATIONS = 'screen-manage-reservations',
   MANAGE_HEADQUARTERS = 'screen-manage-headquarters',
-  MANAGE_SERVICES = 'screen-manage-treatments',
-  MANAGE_PRODUCTS = 'screen-manage-products',
+  MANAGE_EVENTS = 'screen-manage-events',
+  MY_NOTIFICATIONS = 'screen-show-only-notifications',
+  SHOW_EVENTS = 'screen-show-only-events',
+  SHOW_HEADQUARTERS = 'screen-show-only-headquarters',
 }
 export type PERMISSIONS_ARRAY = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
 

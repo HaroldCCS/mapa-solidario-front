@@ -26,6 +26,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 80px;
 }
 
 
@@ -64,6 +65,11 @@
 
   .sidebar::-webkit-scrollbar {
     display: none; /* Para Chrome, Safari y Opera */
+  }
+
+  .link {
+    max-width: none;
+
   }
 
 }

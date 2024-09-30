@@ -66,7 +66,7 @@ function UserCreateComponent(props: {userData?: any, setShow: (show: boolean) =>
         <HeaderComponent incremental={userData?.incremental} />
 
         {isLoading ? <LoaderGoogleComponent /> : <>
-          <Modal.Body className="pb-4"><UserFormComponent userData={userData} setUserData={setUserData} clientDefault={props?.clientDefault} /></Modal.Body>
+          <Modal.Body className="pb-4"><UserFormComponent userData={userData} setUserData={setUserData} /></Modal.Body>
           <FooterComponent handleClose={handleClose} handleSave={handleSave} userData={userData} />
         </>}
       </Modal>
