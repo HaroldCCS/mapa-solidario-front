@@ -4,7 +4,7 @@ import Sidebar from '../../components/sidebar/sidebar.component';
 
 import styles from './index.module.scss'
 
-function StaffLayout(props: { children: React.ReactNode }) {
+function MapLayout(props: { children: React.ReactNode }) {
   return (
     <>
       <header>
@@ -24,4 +24,4 @@ function StaffLayout(props: { children: React.ReactNode }) {
   );
 }
 
-export default StaffLayout;
+export default MapLayout;
