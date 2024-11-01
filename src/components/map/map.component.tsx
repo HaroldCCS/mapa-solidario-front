@@ -23,22 +23,27 @@ import { PERMISSIONS } from 'resources/permissions-constants';
 
 const MapComponent = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  let mapObj: Map;
+  const mapObj = useRef<Map>(new Map({
+    view: new View({
+      center: [-8250000, 520000], // Centro inicial del mapa
+      zoom: 10,
+    }),
+    layers: [
+      new Tile({ source: new OSM() }),
+    ],
+  }));
+
   const { headquarters } = useHeadquarters();
   const { hasPermission } = usePermissions()
 
   const createMap = () => {
     if (!mapRef.current) return;
-    mapObj = new Map({
-      view: new View({
-        center: [-8250000, 520000], // Centro inicial del mapa
-        zoom: 10,
-      }),
-      layers: [
-        new Tile({ source: new OSM() }),
-      ],
+
+    mapObj.current?.setTarget(mapRef.current);
+    mapObj.current?.on('click', (event) => {
+      const coordinates = toLonLat(event.coordinate);
+      setLastLocation(coordinates);
     });
-    mapObj.setTarget(mapRef.current);
   };
 
   const addPoint = (headquarter: Interface) => {
@@ -56,14 +61,14 @@ const MapComponent = () => {
 
     const vectorSource = new VectorSource({ features: [pointFeature] });
     const vectorLayer = new VectorLayer({ source: vectorSource });
-    mapObj.addLayer(vectorLayer);
+    mapObj.current?.addLayer(vectorLayer);
 
     const selectInteraction = new Select({
       condition: click,
       layers: [vectorLayer]
     });
 
-    mapObj.addInteraction(selectInteraction);
+    mapObj.current?.addInteraction(selectInteraction);
 
     selectInteraction.on('select', (e) => {
       if (e.selected.length > 0) setShowModel(headquarter)
@@ -72,30 +77,15 @@ const MapComponent = () => {
 
   useEffect(() => {
     createMap();
-    if (!mapObj) return;
-
-    mapObj.on('click', (event) => {
-      const coordinates = toLonLat(event.coordinate);
-      setLastLocation(coordinates);
-    });
-    if (!printHeadquarters()) {
-      setTimeout(() => printHeadquarters(), 2000);
-    }
-    
-    return () => mapObj.setTarget('');
+    return () => mapObj.current?.setTarget('');
   }, []);
 
-
-  const printHeadquarters = () => {
-    if (headquarters?.length && mapObj) {
-      headquarters.forEach(headquarter => addPoint(headquarter));
-      return true;
-    }
-    return false;
-  }
-
   useEffect(() => {
-    printHeadquarters();
+    //Eliminar los puntos anteriores
+    mapObj.current?.getLayers().getArray()?.map((_d: any) => _d instanceof VectorLayer && mapObj.current?.removeLayer(_d))
+
+    //Añadir los puntos nuevos
+    if (headquarters?.length) headquarters.forEach(headquarter => addPoint(headquarter));
   }, [headquarters]);
 
   const [show, setShow] = useState<boolean>(false);

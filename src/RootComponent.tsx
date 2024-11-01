@@ -15,6 +15,7 @@ import PrivateLoginRoute from './components/auth/login';
 import ManageUsersPage from 'pages/admin/manageUsers/manageUsers.page'
 import { ManageHeadquartersPage } from 'pages/admin/manageHeadquarters/manageHeadquarters.page'
 import ManageNotificationsPage from 'pages/admin/manageNotifications/manageNotifications.page'
+import ManageEventsPage from 'pages/admin/manageEvents/manageEvents.page'
 import MapLayout from 'layouts/map/map.layout'
 
 const RootComponent: React.FC = () => {
@@ -28,6 +29,7 @@ const RootComponent: React.FC = () => {
                     <Route path="*" element={<StaffLayout><NotFoundPage /></StaffLayout>} />
                     <Route path={ROUTES.HOMEPAGE_ROUTE} element={<StaffLayout><HomePage /></StaffLayout>} />
                     <Route path={ROUTES.MANAGE_USERS} element={<StaffLayout><ManageUsersPage /></StaffLayout>} />
+                    <Route path={ROUTES.MANAGE_EVENTS} element={<StaffLayout><ManageEventsPage /></StaffLayout>} />
                     <Route path={ROUTES.MANAGE_HEADQUARTERS} element={<MapLayout><ManageHeadquartersPage /></MapLayout>} />
 
                     <Route path={ROUTES.MY_NOTIFICATIONS} element={<StaffLayout><ManageNotificationsPage /></StaffLayout>} />
