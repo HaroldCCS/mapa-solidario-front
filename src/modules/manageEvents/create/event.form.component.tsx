@@ -16,7 +16,8 @@ export default function EventFormComponent({ eventData, setEventData }: { eventD
   return (
     <>
       <InputComponent required label="Titulo" setHandle={handleChange} name="title" value={eventData?.title} type="string" version="group" />
-      <InputComponent required label="Descripción" setHandle={handleChange} name="description" value={eventData?.description} type="string" version="group" />
+      <InputComponent required label="Descripción" setHandle={handleChange} name="description" value={eventData?.description} type="textbox" version="group" />
+      <InputComponent required label="Fecha" setHandle={handleChange} name="day" value={eventData?.day} type="datetime-local" version="group" />
       <InputComponent required label="Ubicación" setHandle={handleChange} name="ubication" value={eventData?.ubication} type="string" version="group" />
 
 

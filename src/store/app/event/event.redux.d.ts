@@ -6,6 +6,7 @@ export default interface Interface {
 
     user_creator: string
 
+    day: Date
     ubication: string;
     location: number[]
 }

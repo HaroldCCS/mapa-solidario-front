@@ -27,7 +27,7 @@ const ManageNotificationsPage: React.FC = () => {
 		<div className={styles.main}>
 
 			{/* start Titulo */}
-			<HeaderTurnBackComponent title="Gestiona los usuarios" />
+			<HeaderTurnBackComponent title="Gestiona las notificaciones" />
 			{/* end Titulo */}
 
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import { Alert, Button, Card } from 'react-bootstrap';
 import { FiPlusCircle } from 'react-icons/fi';
+import { Fade } from 'react-awesome-reveal';
 
 import { Map, View } from 'ol';
 import { Tile, Vector as VectorLayer } from 'ol/layer';
@@ -12,14 +14,15 @@ import { Style, Icon } from 'ol/style';
 import { click } from 'ol/events/condition';
 import Select from 'ol/interaction/Select';
 
-import styles from './index.module.scss';
-import useHeadquarters from '../../hooks/useHeadquarters.hook';
-import { Interface } from 'store/app/headquarter';
 import HeadquarterCreateComponent from 'modules/manageHeadquarters/create/headquarter.create.component';
-import { Alert, Button, Card } from 'react-bootstrap';
-import { Fade } from 'react-awesome-reveal';
+
+import useHeadquarters from '../../hooks/useHeadquarters.hook';
 import usePermissions from 'hooks/usePermissions.hook';
+import { Interface } from 'store/app/headquarter';
+
 import { PERMISSIONS } from 'resources/permissions-constants';
+
+import styles from './index.module.scss';
 
 const MapComponent = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -33,8 +36,16 @@ const MapComponent = () => {
     ],
   }));
 
-  const { headquarters } = useHeadquarters();
+  const { headquarters, removeHeadquarter } = useHeadquarters();
   const { hasPermission } = usePermissions()
+
+  const [show, setShow] = useState<boolean>(false);
+  const [showModel, setShowModel] = useState<Partial<Interface>>({});
+  const [onSelectLocaltion, setOnSelectLocaltion] = useState<boolean>(false);
+
+  const [modelData, setModelData] = useState<Partial<Interface>>({});
+  const [lastLocation, setLastLocation] = useState<number[]>();
+
 
   const createMap = () => {
     if (!mapRef.current) return;
@@ -86,14 +97,9 @@ const MapComponent = () => {
 
     //Añadir los puntos nuevos
     if (headquarters?.length) headquarters.forEach(headquarter => addPoint(headquarter));
+    setShowModel({});
   }, [headquarters]);
 
-  const [show, setShow] = useState<boolean>(false);
-  const [showModel, setShowModel] = useState<Partial<Interface>>({});
-  const [onSelectLocaltion, setOnSelectLocaltion] = useState<boolean>(false);
-
-  const [modelData, setModelData] = useState<Partial<Interface>>({});
-  const [lastLocation, setLastLocation] = useState<number[]>();
 
   useEffect(() => {
     if (onSelectLocaltion && lastLocation && lastLocation[0] !== 0) {
@@ -141,8 +147,9 @@ const MapComponent = () => {
                   setShow(true);
                 }}>Editar</Button>
                 <Button variant="primary" size='sm' onClick={() => {
-                  setModelData(showModel)
-                  setShow(true);
+                  if (!showModel?._id) return;
+                  removeHeadquarter(showModel?._id)
+                  setShow(false);
                 }}>Eliminar</Button>
               </>}
             </div>

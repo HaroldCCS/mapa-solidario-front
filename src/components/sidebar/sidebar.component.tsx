@@ -10,7 +10,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import { PiUserCircle } from "react-icons/pi";
 import { IoHomeOutline } from "react-icons/io5";
 
-import { IoIosNotificationsOutline, IoMdNotificationsOutline } from "react-icons/io";
+import { IoIosNotificationsOutline } from "react-icons/io";
 import { TbLogout } from "react-icons/tb";
 
 import styles from './index.module.scss';
@@ -33,11 +33,11 @@ function SidebarComponent() {
         {true && <RedirectComponent page_route={ROUTES.HOMEPAGE_ROUTE} currentPath={location}> <IoHomeOutline /> <p>Menu</p>  </RedirectComponent>} {/* TODO PONER PERMISO */}
         {hasPermission(PERMISSIONS.MANAGE_USERS) && <RedirectComponent page_route={ROUTES.MANAGE_USERS} currentPath={location}> <PiUserCircle /> <p>Usuarios</p>  </RedirectComponent>}
         {hasPermission(PERMISSIONS.MANAGE_HEADQUARTERS) && <RedirectComponent page_route={ROUTES.MANAGE_HEADQUARTERS} currentPath={location}> <FaRegMap /> <p>Centros de ayuda</p>  </RedirectComponent>}
-        {hasPermission(PERMISSIONS.MANAGE_EVENTS) && <RedirectComponent page_route={ROUTES.MANAGE_EVENTS} currentPath={location}> <FaRegMap /> <p>Eventos</p>  </RedirectComponent>}
+        {hasPermission(PERMISSIONS.MANAGE_EVENTS) && <RedirectComponent page_route={ROUTES.MANAGE_EVENTS} currentPath={location}> <FiCalendar /> <p>Eventos</p>  </RedirectComponent>}
         
         {hasPermission(PERMISSIONS.SHOW_HEADQUARTERS) && <RedirectComponent page_route={ROUTES.SHOW_HEADQUARTERS} currentPath={location}> <FaRegMap /> <p>Centros de ayuda</p>  </RedirectComponent>}
         {hasPermission(PERMISSIONS.SHOW_EVENTS) && <RedirectComponent page_route={ROUTES.SHOW_EVENTS} currentPath={location}> <FiCalendar /> <p>Eventos</p>  </RedirectComponent>}
-        {hasPermission(PERMISSIONS.MY_NOTIFICATIONS) && <RedirectComponent page_route={ROUTES.MY_NOTIFICATIONS} currentPath={location}> <IoIosNotificationsOutline /> <p><small>Notificaciones</small> </p>  </RedirectComponent>}
+        {hasPermission(PERMISSIONS.MY_NOTIFICATIONS) && <RedirectComponent page_route={ROUTES.MY_NOTIFICATIONS} currentPath={location}> <IoIosNotificationsOutline /> <p><small>Alertas</small> </p>  </RedirectComponent>}
         <div className={styles.logout}>
           <RedirectComponent callback={logout} currentPath={location}> <TbLogout /> <p>Salir</p> </RedirectComponent>
         </div>

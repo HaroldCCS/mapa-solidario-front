@@ -70,6 +70,7 @@ const ManageEventsPage: React.FC = () => {
 						<tr>
 							<th>titulo</th>
 							<th>ubicación</th>
+							<th>Fecha</th>
 							<th>estado</th>
 							<th style={{ width: '100px' }} >acciones</th>
 						</tr>
@@ -78,6 +79,7 @@ const ManageEventsPage: React.FC = () => {
 						{events?.map(r => (<tr key={r?._id}>
 							<td>{r.title}</td>
 							<td>{r.ubication}</td>
+							<td>{r?.day && new Date(r?.day)?.toLocaleString()}</td>
 							<td>{r.status ? 'Activo' : 'Inactivo'}</td>
 							<td className='d-flex justify-content-center'>
 							<Form.Check className="d-flex align-items-center m-2" inline type="switch" id="status" checked={r?.status} name="status" onChange={e => handleChangeStatus(r)} />

@@ -8,7 +8,7 @@ abstract class AbstractCrudService {
   public path: string;
 
   constructor(user?: any, token?: string, path?: string) {
-    const data = JSON.parse(localStorage.getItem('persist:root')  || '{}')
+    const data = JSON.parse(localStorage.getItem('persist:root') || '{}')
     const user_data = JSON.parse(data.user)
 
     this.token = token || user_data?.token?.token;
@@ -25,11 +25,7 @@ abstract class AbstractCrudService {
 
       return response?.data;
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Algo ha salido mal',
-      });
+      this.showError(error)
     }
   }
 
@@ -41,11 +37,7 @@ abstract class AbstractCrudService {
 
       return response?.data;
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Algo ha salido mal',
-      });
+      this.showError(error)
     }
   }
 
@@ -57,11 +49,7 @@ abstract class AbstractCrudService {
 
       return response?.data;
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Algo ha salido mal',
-      });
+      this.showError(error)
     }
   }
 
@@ -72,11 +60,7 @@ abstract class AbstractCrudService {
 
       return response?.data;
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Algo ha salido mal',
-      });
+      this.showError(error)
     }
   }
 
@@ -84,10 +68,22 @@ abstract class AbstractCrudService {
   async delete(_id: string): Promise<any> {
     try {
       const response = await CustomAxios({ method: 'DELETE', url: this.path + '/' + _id, headers: { 'Authorization': `Bearer ${this.token}` } })
-      if (!response?.data?._id) throw response
+      if (response?.data?.message !== 'deleted') throw response
 
       return response?.data;
     } catch (error) {
+      this.showError(error)
+    }
+  }
+
+  private showError(response: any) {
+    if (response?.response?.data?.error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: response?.response?.data?.error,
+      })
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Error',

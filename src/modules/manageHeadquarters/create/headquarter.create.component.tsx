@@ -48,7 +48,7 @@ function HeadquarterCreateComponent(props: {modelData?: any, setShow: (show: boo
   return (
     <>
       <Button variant="outline-primary" onClick={handleShow} size="sm">
-        Crear cliente <BsBookmarkPlus className={styles.svg} />
+        Crear centro de ayuda <BsBookmarkPlus className={styles.svg} />
       </Button>
 
       <Modal
@@ -80,7 +80,7 @@ function HeadquarterCreateComponent(props: {modelData?: any, setShow: (show: boo
 
 function HeaderComponent({ incremental }: { incremental: string }) {
   return <Modal.Header closeButton>
-    <Modal.Title>{incremental ? 'Editar cliente id ' + incremental : 'Crear cliente'}</Modal.Title>
+    <Modal.Title>{incremental ? 'Editar centro de ayuda id ' + incremental : 'Crear centro'}</Modal.Title>
   </Modal.Header>
 }
 

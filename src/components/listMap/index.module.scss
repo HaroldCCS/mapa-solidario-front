@@ -1,0 +1,20 @@
+.map_container {
+
+  width: 100%;
+  height: calc(100vh - 60px);
+
+  li {
+    display: none;
+  }
+
+  canvas {
+    z-index: inherit;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .map_container {
+    width: 100%;
+  }
+}

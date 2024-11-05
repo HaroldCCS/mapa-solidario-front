@@ -17,6 +17,7 @@ import { ManageHeadquartersPage } from 'pages/admin/manageHeadquarters/manageHea
 import ManageNotificationsPage from 'pages/admin/manageNotifications/manageNotifications.page'
 import ManageEventsPage from 'pages/admin/manageEvents/manageEvents.page'
 import MapLayout from 'layouts/map/map.layout'
+import ShowEventsPage from 'pages/public/showEvents/showEvents.page'
 
 const RootComponent: React.FC = () => {
     return (
@@ -33,7 +34,7 @@ const RootComponent: React.FC = () => {
                     <Route path={ROUTES.MANAGE_HEADQUARTERS} element={<MapLayout><ManageHeadquartersPage /></MapLayout>} />
 
                     <Route path={ROUTES.MY_NOTIFICATIONS} element={<StaffLayout><ManageNotificationsPage /></StaffLayout>} />
-                    <Route path={ROUTES.SHOW_EVENTS} element={<MapLayout><ManageHeadquartersPage /></MapLayout>} />
+                    <Route path={ROUTES.SHOW_EVENTS} element={<MapLayout><ShowEventsPage /></MapLayout>} />
                     <Route path={ROUTES.SHOW_HEADQUARTERS} element={<StaffLayout><ManageHeadquartersPage /></StaffLayout>} />
                 </Route>
 
