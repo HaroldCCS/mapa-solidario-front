@@ -25,16 +25,13 @@ const ShowEventsPage: React.FC = () => {
 							<th>titulo</th>
 							<th>ubicación</th>
 							<th>Fecha</th>
-							<th>estado</th>
 						</tr>
 					</thead>
 					<tbody>
-						{events?.map(r => (<tr key={r?._id} className={r?._id === eventData?._id ? styles.active : ''} onClick={() => setEventData(r)}>
+						{events?.filter(_e => _e.status)?.map(r => (<tr key={r?._id} className={r?._id === eventData?._id ? styles.active : ''} onClick={() => setEventData(r)}>
 							<td>{r.title}</td>
 							<td>{r.ubication}</td>
 							<td>{r?.day && new Date(r?.day)?.toLocaleString()}</td>
-							<td>{r.status ? 'Activo' : 'Inactivo'}</td>
-
 						</tr>))}
 					</tbody>
 				</Table>
