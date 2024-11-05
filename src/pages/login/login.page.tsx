@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { auth } from 'firebasea/firebase_credentials';
 
 
 import loginService from 'services/auth/login.service';
