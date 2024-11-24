@@ -13,6 +13,8 @@ import allUsersAction from 'store/app/allUsers/allUsers.action';
 import notificationAction from 'store/app/notification/notification.action';
 import headquarterAction from 'store/app/headquarter/headquarter.action';
 import eventAction from 'store/app/event/event.action';
+import surveyUserAction from 'store/app/survey-user/survey-user.action';
+import surveyPropertieAction from 'store/app/survey-propertie/survey-propertie.action';
 
 function useToken() {
   const token = useAppSelector(state => state?.user?.token?.token);
@@ -22,12 +24,14 @@ function useToken() {
   const logout = () => {
     dispatch(tokenAction.drop());
     dispatch(userAction.delete_all());
-    dispatch(rolAction.delete_all());
     dispatch(permissionAction.delete_all());
+    dispatch(rolAction.delete_all());
     dispatch(allUsersAction.delete_all());
     dispatch(notificationAction.delete_all());
     dispatch(headquarterAction.delete_all());
     dispatch(eventAction.delete_all());
+    dispatch(surveyUserAction.delete_all());
+    dispatch(surveyPropertieAction.delete_all());
     navigate(ROUTES.LOGIN);
   }
 

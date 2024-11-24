@@ -22,6 +22,8 @@ import ManageEventsPage from 'pages/admin/manageEvents/manageEvents.page'
 import ShowEventsPage from 'pages/public/showEvents/showEvents.page'
 import MyProfilePage from 'pages/public/myProfile/myProfile'
 import CreateNotificationPage from 'pages/admin/createNotifications/createNotification'
+import ManageSurveyPropertiesPage from './pages/admin/manageSurveyProperties/manageSurveyProperties';
+import ManageReportsPage from 'pages/admin/manageReports/manageReportsPage'
 
 const RootComponent: React.FC = () => {
     return (
@@ -36,6 +38,8 @@ const RootComponent: React.FC = () => {
 
                     <Route path={ROUTES.MANAGE_USERS} element={<StaffLayout><ManageUsersPage /></StaffLayout>} />
                     <Route path={ROUTES.CREATE_NOTIFICATIONS} element={<StaffLayout><CreateNotificationPage /></StaffLayout>} />
+                    <Route path={ROUTES.MANAGE_SURVEY_PROPERTIES} element={<StaffLayout><ManageSurveyPropertiesPage /></StaffLayout>} /> {/* TODO PONER PERMISO */}
+                    <Route path={ROUTES.MANAGE_REPORTS} element={<StaffLayout><ManageReportsPage /></StaffLayout>} /> {/* TODO PONER PERMISO */}
 
                     <Route path={ROUTES.MY_PROFILE} element={<StaffLayout><MyProfilePage /></StaffLayout>} />
                     <Route path={ROUTES.MANAGE_EVENTS} element={<StaffLayout><ManageEventsPage /></StaffLayout>} />
@@ -43,6 +47,8 @@ const RootComponent: React.FC = () => {
 
                     <Route path={ROUTES.MY_NOTIFICATIONS} element={<StaffLayout><ManageNotificationsPage /></StaffLayout>} />
                     <Route path={ROUTES.SHOW_EVENTS} element={<MapLayout><ShowEventsPage /></MapLayout>} />
+                    <Route path={ROUTES.SHOW_EVENTS} element={<MapLayout><ShowEventsPage /></MapLayout>} /> {/* TODO PONER PERMISO */}
+                    <Route path={ROUTES.SHOW_SURVEY} element={<MapLayout><ShowEventsPage /></MapLayout>} /> {/* TODO PONER PERMISO */}
                     <Route path={ROUTES.SHOW_HEADQUARTERS} element={<StaffLayout><ManageHeadquartersPage /></StaffLayout>} />
                 </Route>
 

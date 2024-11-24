@@ -4,8 +4,11 @@ html {
   // --primary: #007bff;
   --main-font-family: "Montserrat", sans-serif;
 
-  --primary: #3ECC27;
+
+  --primary: #21A8EC;
   --button-primary-hover: #1280B0;
+
+  --primary_active: #2139ec;
 
   --gray-light: #ced4da;
   --gray-medium: #495057;
@@ -13,7 +16,7 @@ html {
   --background:#e5e5e5;
 
   --background2: #fff;
-  --text: #33ad20;
+  --text: #21A8EC;
   --text2: #8F989D;
 
   --font-title: 'Barlow', sans-serif;
@@ -21,7 +24,6 @@ html {
   --font-size: 16px;
 
   --button-primary: var(--primary);
-  --button-primary-hover: #34b421;
   --button-primary-bg: #341b69;
 
   --button-secundary: var(--secondary);

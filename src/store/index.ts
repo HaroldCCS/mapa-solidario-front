@@ -13,6 +13,8 @@ import allUsersReducer from './app/allUsers/allUsers.reducer';
 import eventReducer from './app/event/event.reducer'
 import notificationReducer from './app/notification/notification.reducer'
 import headquarterReducer from './app/headquarter/headquarter.reducer'
+import surveyPropertieReducer from './app/survey-propertie/survey-propertie.reducer'
+import surveyUserReducer from './app/survey-user/survey-user.reducer'
 
 
 const userReducerCombined = combineReducers({
@@ -22,15 +24,15 @@ const userReducerCombined = combineReducers({
 })
 
 
-
-
 const rootReducer = combineReducers({
     user: userReducerCombined,
     roles: rolReducer,
     all_users: allUsersReducer,
     events: eventReducer,
     notifications: notificationReducer,
-    headquarters: headquarterReducer
+    headquarters: headquarterReducer,
+    survey_user: surveyUserReducer,
+    survey_properties: surveyPropertieReducer
 })
 
 const persistedReducer = persistReducer(
