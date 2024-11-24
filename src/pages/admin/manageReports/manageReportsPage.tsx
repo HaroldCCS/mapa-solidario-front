@@ -7,6 +7,27 @@ import { Fade } from 'react-awesome-reveal';
 import CardReportComponent from './cardReport/cardReportComponent';
 import ReportService from 'services/app/report.service';
 import Swal from 'sweetalert2';
+import { Bar } from 'react-chartjs-2';
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 
 const ManageReportsPage: React.FC = () => {
 	const service = new ReportService();
@@ -34,7 +55,6 @@ const ManageReportsPage: React.FC = () => {
 	const generateReportEntities = async () => {
 		setLoadingReportEntities(true)
 		const response = await service.generateReportEntities()
-		console.log('response', response)
 		if (response?.length) {
 			makeReport(response, 'reporte_entidades')
 			Swal.fire({
@@ -61,6 +81,35 @@ const ManageReportsPage: React.FC = () => {
 
 	}
 
+	//------ reporte estadsiticas
+
+	const [statistics, setStatistics] = useState<any>({
+		labels: [],
+		datasets: [],
+	})
+
+	useEffect(() => {
+		const getStatistics = async () => {
+			const response = await service.generateReportSurveysStatistics()
+			console.log('response', response)
+			if (!response?.length) return
+
+			const labels = response?.map((item: {label: string}) => item?.label)
+			const values = response?.map((item: {value: number}) => item?.value)
+			
+			setStatistics({
+				labels,
+				datasets: [
+					{
+						label: 'Datos',
+						data: values,
+						backgroundColor: 'rgba(255, 99, 132, 0.5)',
+					}
+				],
+			})
+		}
+		getStatistics()
+	}, [])
 
 	return (
 		<div className={styles.main}>
@@ -85,7 +134,27 @@ const ManageReportsPage: React.FC = () => {
 						loading={loadingReportSurveys}
 					/>
 				</div>
+			</Fade>
 
+			<Fade>
+				<div className='d-flex justify-content-evenly align-items-center flex-wrap gap-3 mt-5'>
+
+				<Bar
+					options={{
+						responsive: true,
+						plugins: {
+							legend: {
+								position: 'top' as const,
+							},
+							title: {
+								display: true,
+								text: 'Estadisticas de encuestas: preguntas que han sido contestadas por beneficiarios',
+							},
+						},
+					}}
+					data={statistics}
+				/>
+				</div>
 			</Fade>
 
 		</div>

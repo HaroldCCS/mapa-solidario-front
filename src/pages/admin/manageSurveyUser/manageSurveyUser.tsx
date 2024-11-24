@@ -20,11 +20,11 @@ const ManageSurveyUserPage: React.FC = () => {
 	const [newData, setNewData] = useState<{ [propertie_id: string]: any }>({});
 	const [canSave, setCanSave] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
 		const propertie_id = e.target.name;
 		setNewData({ ...newData, [propertie_id]: value });
-  };
+	};
 
 	const save = async () => {
 		const data: Interface[] = Object.keys(newData).map(key => ({ propertie: key, value: newData[key] }))
@@ -52,21 +52,21 @@ const ManageSurveyUserPage: React.FC = () => {
 				</Fade>
 			</div>
 
-			<div className='d-flex justify-content-between flex-wrap mb-5'>
+			<div className='d-flex justify-content-center flex-wrap mb-5'>
 
-			{isLoadingos && <LoaderGoogleComponent />}
-			{!isLoadingos && survey_properties?.map(item => (
+				{isLoadingos && <LoaderGoogleComponent />}
+				{!isLoadingos && survey_properties?.map(item => (
 					<InputComponent
-					key={item?._id || ''}
-					required
-					label={item?.propertie || ''}
-					setHandle={handleChange}
-					name={item?._id || ''}
-					value={newData[item?._id || ''] || survey_user?.find(_i => _i?.propertie === item?._id)?.value}
-					type={item?.type_form || 'text'}
-					version="group"
+						key={item?._id || ''}
+						required
+						label={item?.propertie || ''}
+						setHandle={handleChange}
+						name={item?._id || ''}
+						value={newData[item?._id || ''] || survey_user?.find(_i => _i?.propertie === item?._id)?.value}
+						type={item?.type_form || 'text'}
+						version="group"
 					/>
-			))}
+				))}
 
 			</div>
 

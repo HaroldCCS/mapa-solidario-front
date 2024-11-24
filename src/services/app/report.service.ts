@@ -42,4 +42,18 @@ export default class ReportService extends AbstractCrudService {
       });
     }
   }
+  async generateReportSurveysStatistics(): Promise<any> {
+    try {
+      const response = await CustomAxios({ method: 'GET', url: this.path + "/surveys-statistics", headers: { 'Authorization': `Bearer ${this.token}` } })
+      if (!response?.data) throw response
+
+      return response?.data;
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Algo ha salido mal',
+      });
+    }
+  }
 }
