@@ -24,6 +24,7 @@ import MyProfilePage from 'pages/public/myProfile/myProfile'
 import CreateNotificationPage from 'pages/admin/createNotifications/createNotification'
 import ManageSurveyPropertiesPage from './pages/admin/manageSurveyProperties/manageSurveyProperties';
 import ManageReportsPage from 'pages/admin/manageReports/manageReportsPage'
+import ManageSurveyUserPage from 'pages/admin/manageSurveyUser/manageSurveyUser'
 
 const RootComponent: React.FC = () => {
     return (
@@ -48,7 +49,7 @@ const RootComponent: React.FC = () => {
                     <Route path={ROUTES.MY_NOTIFICATIONS} element={<StaffLayout><ManageNotificationsPage /></StaffLayout>} />
                     <Route path={ROUTES.SHOW_EVENTS} element={<MapLayout><ShowEventsPage /></MapLayout>} />
                     <Route path={ROUTES.SHOW_EVENTS} element={<MapLayout><ShowEventsPage /></MapLayout>} /> {/* TODO PONER PERMISO */}
-                    <Route path={ROUTES.SHOW_SURVEY} element={<MapLayout><ShowEventsPage /></MapLayout>} /> {/* TODO PONER PERMISO */}
+                    <Route path={ROUTES.SHOW_SURVEY} element={<StaffLayout><ManageSurveyUserPage /></StaffLayout>} /> {/* TODO PONER PERMISO */}
                     <Route path={ROUTES.SHOW_HEADQUARTERS} element={<StaffLayout><ManageHeadquartersPage /></StaffLayout>} />
                 </Route>
 

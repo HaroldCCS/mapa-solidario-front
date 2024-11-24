@@ -2,55 +2,39 @@ import React, { useEffect, useState } from 'react'
 
 
 import styles from './index.module.scss';
-import useAllUsers from 'hooks/useAllUsers.hook';
 
 import HeaderTurnBackComponent from 'components/header_turn_back/header_turn_back.component';
 import InputComponent from '../../../components/inputForm/input.component';
-import { Button, Form, InputGroup } from 'react-bootstrap';
-import NotificationService from 'services/app/notification.service';
-import Swal from 'sweetalert2';
+import useSurveyUser from 'hooks/useSurveyUser.hook';
+import useSurveyProperties from 'hooks/useSurveyProperties.hook';
+import { Fade } from 'react-awesome-reveal';
+import { Button } from 'react-bootstrap';
+import { BsSave } from 'react-icons/bs';
+import { Interface } from 'store/app/survey-user';
+import LoaderGoogleComponent from '../../../components/loaders/loaderV2/loaderGoogle.component';
 
 const ManageSurveyUserPage: React.FC = () => {
-	const { all_users: users, getAll, updateUserValidation } = useAllUsers()
+	const { survey_user, saveMany, isLoadingos } = useSurveyUser();
+	const { survey_properties } = useSurveyProperties({});
 
-	const [newNotification, setNewNotification] = useState<{ name: string, description: string, users: string[] }>({ name: '', description: '', users: [] })
+	const [newData, setNewData] = useState<{ [propertie_id: string]: any }>({});
+	const [canSave, setCanSave] = useState<boolean>(false);
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.value;
-		setNewNotification({ ...newNotification, [e.target.name]: value });
-	};
-	const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const value = e.target.checked;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+		const propertie_id = e.target.name;
+		setNewData({ ...newData, [propertie_id]: value });
+  };
 
-		setNewNotification((prev) => {
-			const new_users = [...prev.users]
-			if (value) {
-				new_users.push(e.target.name)
-			} else {
-				new_users.splice(new_users.indexOf(e.target.name), 1)
-			}
-
-			return { ...prev, users: new_users }
-		})
-	};
-
-	const createNotification = async () => {
-		const notification = new NotificationService();
-		const data = await notification.createMany(newNotification)
-		if (data?.success) {
-			setNewNotification({ name: '', description: '', users: [] })
-			Swal.fire({
-				icon: 'success',
-				title: 'Notificación enviada',
-				text: 'La notificación se ha enviado correctamente',
-			});
-		}
+	const save = async () => {
+		const data: Interface[] = Object.keys(newData).map(key => ({ propertie: key, value: newData[key] }))
+		await saveMany(data)
+		setNewData({})
 	}
 
-	const validateAllProperties = () => {
-		if (!newNotification?.name || !newNotification?.description || !newNotification?.users?.length) return true
-		return false
-	}
+	useEffect(() => {
+		setCanSave(!!Object.keys(newData).length)
+	}, [newData])
 
 	return (
 		<div className={styles.main}>
@@ -60,6 +44,31 @@ const ManageSurveyUserPage: React.FC = () => {
 			{/* end Titulo */}
 
 
+			<div className='d-flex justify-content-center flex-wrap mb-5'>
+				<Fade>
+					<Button variant="outline-primary" size='lg' onClick={save} disabled={!canSave}>
+						Guardar <BsSave />
+					</Button>
+				</Fade>
+			</div>
+
+			<div className='d-flex justify-content-between flex-wrap mb-5'>
+
+			{isLoadingos && <LoaderGoogleComponent />}
+			{!isLoadingos && survey_properties?.map(item => (
+					<InputComponent
+					key={item?._id || ''}
+					required
+					label={item?.propertie || ''}
+					setHandle={handleChange}
+					name={item?._id || ''}
+					value={newData[item?._id || ''] || survey_user?.find(_i => _i?.propertie === item?._id)?.value}
+					type={item?.type_form || 'text'}
+					version="group"
+					/>
+			))}
+
+			</div>
 
 		</div>
 	)

@@ -40,11 +40,21 @@ function useSurveyUser() {
     dispatch(action.update(data as Interface))
   }
 
+  const saveMany = async (data: Partial<Interface>[]) => {
+    setIsLoading(true);
+    await service.saveMany(data)
+    dispatch(action.delete_all())
+    await getAll()
+    setIsLoading(false);
+  }
+
 
   return {
     survey_user,
 
+    saveMany,
     getAll,
+
     add,
     remove,
     update,
