@@ -76,7 +76,7 @@ abstract class AbstractCrudService {
     }
   }
 
-  private showError(response: any) {
+  protected showError(response: any) {
     if (response?.response?.data?.error) {
       Swal.fire({
         icon: 'error',

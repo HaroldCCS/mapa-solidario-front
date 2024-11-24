@@ -4,21 +4,31 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import styles from './index.module.scss';
-import { useAppDispatch } from "store";
+import { useAppDispatch, useAppSelector } from "store";
 import LoaderGoogleComponent from '../../../components/loaders/loaderV2/loaderGoogle.component';
 import { FiUserPlus } from "react-icons/fi";
 import UserService from "services/app/user.service";
 import UserFormComponent from "./user.form.component";
 import allUsersAction from "store/app/allUsers/allUsers.action";
+import useUser from "hooks/useUser.hook";
 
 
-function UserCreateComponent(props: {userData?: any, setShow: (show: boolean) => void, show: boolean, clientDefault?: boolean }) {
+function UserCreateComponent(props: {
+  hideFields?: { status?: boolean, rol?: boolean }
+  blockFields?: { email?: boolean }
+  hideCreate?: boolean
+  userData?: any
+  setShow: (show: boolean) => void
+  show: boolean
+  clientDefault?: boolean
+}) {
   const userService = new UserService();
   const dispatch = useAppDispatch();
-  const {show, setShow} = props
+  const { user, update } = useUser();
+  const { show, setShow } = props
 
 
-  const [userData, setUserData] = useState<any>(Object.keys(props?.userData)?.length ? props.userData : { status: true});
+  const [userData, setUserData] = useState<any>(Object.keys(props?.userData)?.length ? props.userData : { status: true });
 
   useEffect(() => {
     setUserData(props?.userData || {})
@@ -29,12 +39,16 @@ function UserCreateComponent(props: {userData?: any, setShow: (show: boolean) =>
     setIsLoading(true);
 
     if (userData?._id) {
-      const response = await userService.edit(userData);
-      if (response?._id) {
-        dispatch(allUsersAction.update(response));
+      if (user?._id === userData?._id) {
+        await update(userData)
+      } else {
+        const response = await userService.edit(userData);
+        if (response?._id) {
+          dispatch(allUsersAction.update(response));
+        }
       }
     } else {
-      const new_user = {...userData, status: true}
+      const new_user = { ...userData, status: true }
       const response = await userService.create(new_user);
       if (response?._id) {
         dispatch(allUsersAction.add(response));
@@ -49,9 +63,9 @@ function UserCreateComponent(props: {userData?: any, setShow: (show: boolean) =>
 
   return (
     <>
-      <Button variant="outline-primary" onClick={handleShow} size="sm">
+      {props.hideCreate || <Button variant="outline-primary" onClick={handleShow} size="sm">
         Crear usuario <FiUserPlus className={styles.svg} />
-      </Button>
+      </Button>}
 
       <Modal
         show={show}
@@ -66,7 +80,7 @@ function UserCreateComponent(props: {userData?: any, setShow: (show: boolean) =>
         <HeaderComponent incremental={userData?.incremental} />
 
         {isLoading ? <LoaderGoogleComponent /> : <>
-          <Modal.Body className="pb-4"><UserFormComponent userData={userData} setUserData={setUserData} /></Modal.Body>
+          <Modal.Body className="pb-4"><UserFormComponent userData={userData} setUserData={setUserData} hideFields={props.hideFields} blockFields={props.blockFields} /></Modal.Body>
           <FooterComponent handleClose={handleClose} handleSave={handleSave} userData={userData} />
         </>}
       </Modal>

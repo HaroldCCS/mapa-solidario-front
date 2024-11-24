@@ -3,6 +3,7 @@ export default interface Interface {
 	email?: string;
 	name?: string;
 	cell_phone?: string;
+	address?: string;
 	password?: string;
 	incremental?: number;
 	nit?: string;

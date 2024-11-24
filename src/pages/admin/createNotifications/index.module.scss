@@ -1,0 +1,23 @@
+.main {
+  max-width: 1000px;
+  width: 100%;
+  margin: auto;
+  svg {
+    width: 1.3rem;
+    margin: 0;
+    margin-left: 0.5rem;
+  }
+}
+
+.input_group_text {
+  background-color: var(--primary);
+  color: black;
+  border-color: black;
+  height: 45px;
+}
+
+.break_line {
+  word-break: break-word;
+  overflow-wrap: break-word; /* Propiedad moderna preferida */
+  word-wrap: break-word;
+}
