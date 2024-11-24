@@ -44,7 +44,8 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.72.0",
     "sass-loader": "^14.1.1",
-    "sweetalert2": "^11.12.2"
+    "sweetalert2": "^11.12.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",

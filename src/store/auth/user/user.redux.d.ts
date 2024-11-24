@@ -1,5 +1,10 @@
 export default interface InterfaceHome {
     _id: string,
-    name: string
     email: string
+    rol?: string
+
+    name: string
+    cell_phone?: string
+    nit?: string
+    address?: string
 }

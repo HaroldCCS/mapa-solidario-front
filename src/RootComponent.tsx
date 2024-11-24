@@ -8,16 +8,23 @@ import { ROUTES } from './resources/routes-constants'
 //Layouts
 import AnonymousLayout from 'layouts/anonymous/anonymous.layout'
 import StaffLayout from './layouts/staff/staff.layout'
+import MapLayout from 'layouts/map/map.layout'
 
-import { NotFoundPage, LoginPage, HomePage } from './pages'
+
 import PrivateRoute from './components/auth/auth';
 import PrivateLoginRoute from './components/auth/login';
+
+import { NotFoundPage, LoginPage, HomePage } from './pages'
 import ManageUsersPage from 'pages/admin/manageUsers/manageUsers.page'
 import { ManageHeadquartersPage } from 'pages/admin/manageHeadquarters/manageHeadquarters.page'
 import ManageNotificationsPage from 'pages/admin/manageNotifications/manageNotifications.page'
 import ManageEventsPage from 'pages/admin/manageEvents/manageEvents.page'
-import MapLayout from 'layouts/map/map.layout'
 import ShowEventsPage from 'pages/public/showEvents/showEvents.page'
+import MyProfilePage from 'pages/public/myProfile/myProfile'
+import CreateNotificationPage from 'pages/admin/createNotifications/createNotification'
+import ManageSurveyPropertiesPage from './pages/admin/manageSurveyProperties/manageSurveyProperties';
+import ManageReportsPage from 'pages/admin/manageReports/manageReportsPage'
+import ManageSurveyUserPage from 'pages/admin/manageSurveyUser/manageSurveyUser'
 
 const RootComponent: React.FC = () => {
     return (
@@ -29,12 +36,20 @@ const RootComponent: React.FC = () => {
                 <Route element={<PrivateRoute />}>
                     <Route path="*" element={<StaffLayout><NotFoundPage /></StaffLayout>} />
                     <Route path={ROUTES.HOMEPAGE_ROUTE} element={<StaffLayout><HomePage /></StaffLayout>} />
+
                     <Route path={ROUTES.MANAGE_USERS} element={<StaffLayout><ManageUsersPage /></StaffLayout>} />
+                    <Route path={ROUTES.CREATE_NOTIFICATIONS} element={<StaffLayout><CreateNotificationPage /></StaffLayout>} />
+                    <Route path={ROUTES.MANAGE_SURVEY_PROPERTIES} element={<StaffLayout><ManageSurveyPropertiesPage /></StaffLayout>} /> {/* TODO PONER PERMISO */}
+                    <Route path={ROUTES.MANAGE_REPORTS} element={<StaffLayout><ManageReportsPage /></StaffLayout>} /> {/* TODO PONER PERMISO */}
+
+                    <Route path={ROUTES.MY_PROFILE} element={<StaffLayout><MyProfilePage /></StaffLayout>} />
                     <Route path={ROUTES.MANAGE_EVENTS} element={<StaffLayout><ManageEventsPage /></StaffLayout>} />
                     <Route path={ROUTES.MANAGE_HEADQUARTERS} element={<MapLayout><ManageHeadquartersPage /></MapLayout>} />
 
                     <Route path={ROUTES.MY_NOTIFICATIONS} element={<StaffLayout><ManageNotificationsPage /></StaffLayout>} />
                     <Route path={ROUTES.SHOW_EVENTS} element={<MapLayout><ShowEventsPage /></MapLayout>} />
+                    <Route path={ROUTES.SHOW_EVENTS} element={<MapLayout><ShowEventsPage /></MapLayout>} /> {/* TODO PONER PERMISO */}
+                    <Route path={ROUTES.SHOW_SURVEY} element={<StaffLayout><ManageSurveyUserPage /></StaffLayout>} /> {/* TODO PONER PERMISO */}
                     <Route path={ROUTES.SHOW_HEADQUARTERS} element={<StaffLayout><ManageHeadquartersPage /></StaffLayout>} />
                 </Route>
 
